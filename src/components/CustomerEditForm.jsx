@@ -1,10 +1,29 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import CustomerService from '../core/CustomerService';
+import { useParams } from 'react-router-dom';
 
-function CustomerForm() {
+function CustomerEditForm() {
 
     var customer = {
     };
+
+    let { id } = useParams();
+
+    useEffect(()=>{
+
+            CustomerService.get(id).then(response=>{
+              var customerData = response.data.result;
+              console.log(customerData);
+              setName(customerData.firstName);
+              setLastName(customerData.lastName);
+              setEmail(customerData.email);
+              setPhone(customerData.phone);
+              setAddresses(customerData.addresses || []);
+            });
+        }
+    ,[]);
+
+
     const [firstName, setName] = useState(customer.firstName);
     const [lastName, setLastName] = useState(customer.lastName);
     const [email, setEmail] = useState(customer.email);
@@ -18,7 +37,8 @@ function CustomerForm() {
         customer.email = email;
         customer.phone = phone;
         customer.addresses = addresses;
-        CustomerService.add(customer);
+        customer.id = id;
+        CustomerService.update(id, customer);
     }
 
   const handleAddressChange = (index, address) => {
@@ -35,7 +55,8 @@ function CustomerForm() {
 
   const handleRemoveAddress = (index) => {
     addresses[index].status = false;
-    setAddresses([...addresses.slice(0, index), ...addresses.slice(index + 1)]);
+    setAddresses([...addresses]);
+    //setAddresses([...addresses.slice(0, index), ...addresses.slice(index + 1)]);
   };
 
   return (
@@ -124,4 +145,4 @@ function CustomerForm() {
   );
 }
 
-export default CustomerForm;
+export default CustomerEditForm;

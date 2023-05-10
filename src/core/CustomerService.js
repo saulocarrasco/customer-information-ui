@@ -1,4 +1,4 @@
-import axios, {isCancel, AxiosError} from 'axios';
+import axios from 'axios';
 
 axios.defaults.headers.common['Access-Control-Allow-Origin'] = '*';
 
@@ -8,10 +8,12 @@ export default {
         return axios.get(`https://localhost:7034/api/Customers`);
     },
     add(customer){
-        console.log(customer)
         return axios.post(`https://localhost:7034/api/Customers`, customer);
     },
-    update(){
-
+    get(id){
+        return axios.get(`https://localhost:7034/api/Customers/${id}`);
+    },
+    update(id, customer){
+        return axios.put(`https://localhost:7034/api/Customers/${id}`, customer);
     }
 }

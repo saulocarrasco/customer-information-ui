@@ -6,12 +6,13 @@ import {RouterProvider, createBrowserRouter} from 'react-router-dom';
 
 import RootLayout from './routes/RootLayout';
 import CustomerForm from './components/CustomerForm';
+import CustomerEditForm from './components/CustomerEditForm';
 import CustomerList from './components/CustomerList';
 
 var router = createBrowserRouter([
   {path: '/', element: <RootLayout />, children:[
     {path: '/customer', element: <CustomerForm/>},
-    {path: '/customer/:id', element: <CustomerForm/>},
+    {path: '/customer/:id', element: <CustomerEditForm/>},
     {path: '/customers-list', element: <CustomerList/>}
   ]}
 ]);

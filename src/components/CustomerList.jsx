@@ -21,9 +21,10 @@ const CustomerList = () => {
           {customers.map((customer) => (
             <li key={customer.id}>
               <p>Name: {customer.name}</p>
+              <p>LastName: {customer.lastName}</p>
               <p>Email: {customer.email}</p>
-              <p>Phone: {customer.Phone}</p>
-              <Link to={`/customers/${customer.id}/edit`}>Edit</Link> {/* Replace with your edit route */}
+              <p>Phone: {customer.phone}</p>
+              <Link to={`/customer/${customer.id}`}>Edit</Link>
             </li>
           ))}
         </ul>
