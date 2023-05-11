@@ -12,22 +12,33 @@ const CustomerList = () => {
   }, []);
 
   return (
-    <div>
+    <div style={{margin: 'auto', width: '80%'}}>
       <h2>Customer List</h2>
       {customers.length === 0 ? (
         <p>No customers found.</p>
       ) : (
-        <ul>
+        <table>
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>LastName</th>
+              <th>Email</th>
+              <th>Phone</th>
+              <th>Option</th>
+            </tr>
+          </thead>
+          <tbody>
           {customers.map((customer) => (
-            <li key={customer.id}>
-              <p>Name: {customer.name}</p>
-              <p>LastName: {customer.lastName}</p>
-              <p>Email: {customer.email}</p>
-              <p>Phone: {customer.phone}</p>
-              <Link to={`/customer/${customer.id}`}>Edit</Link>
-            </li>
+            <tr key={customer.id}>
+              <td>{customer.firstName}</td>
+              <td>{customer.lastName}</td>
+              <td>{customer.email}</td>
+              <td>{customer.phone}</td>
+              <td><Link to={`/customer/${customer.id}`}>Edit</Link></td>
+            </tr>
           ))}
-        </ul>
+          </tbody>
+        </table>
       )}
     </div>
   );

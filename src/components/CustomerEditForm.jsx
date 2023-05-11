@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import CustomerService from '../core/CustomerService';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 
 function CustomerEditForm() {
 
@@ -8,6 +8,7 @@ function CustomerEditForm() {
     };
 
     let { id } = useParams();
+    const navigate = useNavigate();
 
     useEffect(()=>{
 
@@ -38,7 +39,9 @@ function CustomerEditForm() {
         customer.phone = phone;
         customer.addresses = addresses;
         customer.id = id;
+        customer.status = true;
         CustomerService.update(id, customer);
+        navigate('/customers-list');
     }
 
   const handleAddressChange = (index, address) => {
@@ -50,13 +53,12 @@ function CustomerEditForm() {
   };
 
   const handleAddAddress = () => {
-    setAddresses([...addresses, { street: '', city: '', state: '', country: '' }]);
+    setAddresses([...addresses, { street: '', city: '', state: '', country: '', status: true }]);
   };
 
   const handleRemoveAddress = (index) => {
     addresses[index].status = false;
     setAddresses([...addresses]);
-    //setAddresses([...addresses.slice(0, index), ...addresses.slice(index + 1)]);
   };
 
   return (

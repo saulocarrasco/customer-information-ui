@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import CustomerService from '../core/CustomerService';
+import { useNavigate } from 'react-router-dom';
 
 function CustomerForm() {
 
@@ -11,6 +12,8 @@ function CustomerForm() {
     const [phone, setPhone] = useState(customer.phone);
     const [addresses, setAddresses] = useState(customer.addresses || []);
 
+    const navigate = useNavigate();
+
     function onSubmitHandler(event){
         event.preventDefault();
         customer.firstName = firstName;
@@ -19,6 +22,7 @@ function CustomerForm() {
         customer.phone = phone;
         customer.addresses = addresses;
         CustomerService.add(customer);
+        navigate('/customers-list');
     }
 
   const handleAddressChange = (index, address) => {
@@ -30,7 +34,7 @@ function CustomerForm() {
   };
 
   const handleAddAddress = () => {
-    setAddresses([...addresses, { street: '', city: '', state: '', country: '' }]);
+    setAddresses([...addresses, { street: '', city: '', state: '', country: '', status: true }]);
   };
 
   const handleRemoveAddress = (index) => {
@@ -58,8 +62,7 @@ function CustomerForm() {
         <input type="tel" value={phone} onChange={(event) => setPhone(event.target.value)} />
       </label>
       <h2>Addresses</h2>
-      {addresses.map((address, index) => (
-        (address.status) ? <div key={index}>
+      {addresses.map((address, index) => ( <div key={index}>
         <label>
           Street:
           <input
@@ -114,7 +117,7 @@ function CustomerForm() {
         <button type="button" onClick={() => handleRemoveAddress(index)}>
           Remove
         </button>
-      </div> : <div/>
+      </div> 
       ))}
       <button type="button" onClick={handleAddAddress}>
         Add Address
